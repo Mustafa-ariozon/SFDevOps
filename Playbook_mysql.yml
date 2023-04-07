@@ -1,0 +1,28 @@
+---
+- name: Install and configure MySQL
+  hosts: all
+  become: true
+  vars:
+#    mysql_root_password: "mysecretpassword"
+     mysql_version: "5.7"
+  tasks:
+    - name: Install MySQL server
+      apt:
+        name: mysql-server
+        state: latest
+ #   - name: Configure MySQL root password
+  #    debconf:
+   #     name: mysql-server-{{ mysql_version }}
+    #    question: "{{ mysql_version }}/mysql-server/root_password"
+     #   value: "{{ mysql_root_password }}"
+      #  vtype: password
+    #- name: Configure MySQL root password (again)
+     # debconf:
+      #  name: mysql-server-{{ mysql_version }}
+       # question: "{{ mysql_version }}/mysql-server/root_password_again"
+        #value: "{{ mysql_root_password }}"
+        #vtype: password
+   # - name: Restart MySQL service
+      #service:
+       # name: mysql
+        #state: restarted
