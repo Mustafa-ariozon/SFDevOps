@@ -1,0 +1,34 @@
+Step by step:
+
+playbook/
+├── playbook-roles-vsftpd.yml
+└── roles/
+    └── vsftpd/
+        ├── files/
+        │   └── vsftpd.conf
+        └── tasks/
+            └── main.yml
+
+Step 1. navigate to playbook directory and create the roles directory if it does not exist:
+  cd ~/playbook
+  mkdir roles
+
+Step 2. Change into the roles directory and create the vsftpd role directory with the required subdirectories:
+  cd roles
+  mkdir -p vsftpd/{files,tasks}
+
+Step 3. Create the vsftpd.conf file in the files subdirectory. 
+This file will contain the vsftpd configuration settings. 
+we can use the default configuration file or create a custom one. 
+  mentioed in the vsftpd.conf file
+  
+Step 4. Create the main.yml file in the tasks subdirectory. 
+This file will contain the tasks that will be executed by the vsftpd role.
+  Mentioned in the main.yml file
+  
+Step 5. Create the playbook-roles-vsftpd.yml file in the playbook directory. 
+This file will include the vsftpd role. 
+  Mentioed i the playbook-roles-vsftpd.yml file.
+  
+step 6. Ru bellow command to crete Ansible role that installs and runs the vsftpd FTP server.
+  ansible-playbook playbook-roles-vsftpd.yml
