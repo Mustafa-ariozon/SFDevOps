@@ -1,0 +1,29 @@
+---
+- hosts: XX.XXX.XX.XXX
+  become: yes
+
+  vars:
+    user_name: user1
+    ssh_key_path: /dir/playbook/keyfile_rsa.pub
+
+  tasks:
+  - name: Create user {{ user_name }}
+    user:
+      name: "{{ user_name }}"
+      state: present
+      createhome: yes
+
+  - name: Create .ssh directory for {{ user_name }}
+    file:
+      path: "/dir/{{ user_name }}/.ssh"
+      state: directory
+      owner: "{{ user_name }}"
+      group: "{{ user_name }}"
+      mode: "0700"
+
+  - name: Add SSH key to authorized_keys for {{ user_name }}
+    authorized_key:
+      user: "{{ user_name }}"
+      state: present
+      key: "{{ lookup('file', '/dir/playbook/keyfile_rsa.pub') }}"
+
