@@ -1,0 +1,37 @@
+Below commands will rite a playbook to create a user and assign an encrypted SSH key:
+
+Step 1: Generate an SSH keypair for user1
+  ssh-keygen -t rsa -b 4096 -C "user1@example.com"
+  This will generate a public key file id_rsa.pub and a private key file id_rsa in the current user's ~/.ssh/ directory.
+
+Step 2: Copy the public key to the playbook directory and encrypt it using Ansible Vault.
+  cp ~/.ssh/id_rsa.pub /dir/playbook/keyfile_rsa.pub
+  ansible-vault encrypt /dir/playbook/keyfile_rsa.pub
+  Enter and confirm a password to encrypt the file.
+
+Step 3: Create the playbook file user-sshkey-playbook.yml in the /dir/playbook directory with the following content:
+  available in the file <user-sshkey-playbook.yml> of this branch 
+  Replace <remote_system_ip> with the IP address of the remote system.
+
+Step 4: Run the playbook with the following command:
+  ansible-playbook user-sshkey-playbook.yml --ask-vault-pass -e "ansible_become_pass=<sudo_password>"
+  Enter the Ansible Vault password when prompted, and replace <sudo_password> with the sudo password for the remote system.
+
+>> Create a playbook that installs or removes the postfix mail server depending on the tag.
+  
+Step 1: Create the playbook file postfix-playbook.yml in the /dir/playbook directory with the following content:
+  available in the file <postfix-playbook.yml> of this branch
+  Replace <remote_system_ip> with the IP address of the remote system.
+
+Step 2: Run the playbook with the following command to install postfix with default configuration:
+  ansible-playbook postfix-playbook.yml --tags "init" -e "ansible_become_pass=<sudo_password>"
+  Replace <sudo_password> with the sudo password for the remote system.
+
+Step 3: Run the playbook with the following command to remove postfix:
+  ansible-playbook postfix-playbook.yml --tags "drop" -e "ansible_become_pass=<sudo_password>" -e "postfix_state=absent"
+  Replace <sudo_password> with the sudo password for the remote system.
+  
+Note: 
+Incase command above in step3 return error then run this commands
+  You can also try to run the playbook with the --ask-vault-pass option to prompt for the vault password during runtime.
+  ansible-playbook user-sshkey-playbook.yml --ask-vault-pass -e "ansible_become_pass=<sudo_password>"
