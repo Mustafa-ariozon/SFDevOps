@@ -1,0 +1,19 @@
+---
+- name: Install vsftpd package
+  apt:
+    name: vsftpd
+    state: present
+
+- name: Copy vsftpd configuration file
+  copy:
+    src: vsftpd.conf
+    dest: /etc/vsftpd.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Start vsftpd service
+  service:
+    name: vsftpd
+    state: started
+    enabled: yes
