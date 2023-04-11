@@ -1,0 +1,10 @@
+
+---
+- hosts: XXX.XXX.XX.XXX
+  become: yes
+
+  tasks:
+  - name: Install Postfix
+    package:
+      name: postfix
+      state: "{{ postfix_state | default('present') }}"
