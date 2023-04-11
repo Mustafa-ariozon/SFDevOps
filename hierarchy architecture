@@ -1,0 +1,8 @@
+playbook/
+├── playbook-roles-vsftpd.yml
+└── roles/
+    └── vsftpd/
+        ├── files/
+        │   └── vsftpd.conf
+        └── tasks/
+            └── main.yml
