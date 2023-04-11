@@ -1,0 +1,7 @@
+---
+# we can use a spcific host ip instead of a all
+- hosts: all
+  become: yes
+
+  roles:
+    - vsftpd
