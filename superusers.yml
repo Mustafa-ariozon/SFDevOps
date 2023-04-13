@@ -1,0 +1,9 @@
+- name: Create superusers group and add users
+  hosts: all
+  roles:
+    - superusers
+# Run the playbook to create the
+ # ansible-playbook playbooks/superusers.yml -i inventory/production
+                            # Or
+ # ansible-playbook playbook/superusers.yml
+
