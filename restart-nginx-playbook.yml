@@ -1,0 +1,7 @@
+- name: Example playbook to restart nginx
+  hosts: all
+  tasks:
+    - name: Restart nginx
+      systemd:
+        name: nginx
+        state: restarted
