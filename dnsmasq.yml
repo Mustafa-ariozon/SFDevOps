@@ -1,0 +1,16 @@
+# 1.	Создайте Ansible-роль, настраивающую кэширующий DNS-сервер dnsmasq. Примените ее.
+
+├── playbooks/
+│   ├── dnsmasq.yml
+│   ├── nginx-php.yml
+│   └── superusers.yml
+│   ├── restart-nginx.yml
+│   ├── restart-nginx-playbook.yml
+│   └── install-nginx.yml
+└── README.md
+
+---
+- name: Configure dnsmasq
+  hosts: all
+  roles:
+    - dnsmasq
