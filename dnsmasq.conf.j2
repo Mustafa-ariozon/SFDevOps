@@ -1,0 +1,16 @@
+# Step 4: Create a new file called "dnsmasq.conf.j2" under the "templates" directory:
+
+# nano ansible-project/roles/dnsmasq/templates/dnsmasq.conf.j2
+# Add the following content to the "dnsmasq.conf.j2" file:
+
+# DNS Server
+listen-address=127.0.0.1
+
+# DNS Caching
+cache-size=1000
+
+# DNS Forwarding
+server=8.8.8.8
+server=8.8.4.4
+
+# adjust according to your needs
