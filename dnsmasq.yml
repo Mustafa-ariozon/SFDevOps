@@ -17,3 +17,9 @@
   hosts: all
   roles:
     - dnsmasq
+    
+    
+    
+# Run the playbook to apply the dnsmasq role:
+# ansible-playbook playbooks/dnsmasq.yml
+
