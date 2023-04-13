@@ -1,0 +1,31 @@
+# In my case the directory structure looks like this
+
+      #playbook/
+      #├── roles/
+      #│   ├── superusers/
+      #│   │   ├── tasks/
+      #│   │   │   └── main.yml
+      #│   │   └── files/
+      #│   │       └── sudoers.d/
+      #│   │           └── superusers
+      #│   └── README.md
+      #├── playbooks/
+      #│   └── superusers.yml
+      #└── README.md
+
+# comand
+  # mkdir -p ansible-project/roles/superusers
+    # Create a new file called "main.yml" under the "tasks" directory:
+     - name: Create superusers group
+  group:
+    name: superusers
+    state: present
+
+- name: Add user2 and user3 to the superusers group
+  lineinfile:
+    path: /etc/group
+    regexp: "^superusers:"
+    line: "superusers:x:{{ superusers_gid }}:user2,user3"
+    validate: "groupadd -r superusers && grep -q '^superusers:' /etc/group"
+  vars:
+    superusers_gid: "{{ 2000 | random }}"
