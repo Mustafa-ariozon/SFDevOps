@@ -16,6 +16,7 @@
 # comand
   # mkdir -p ansible-project/roles/superusers
     # Create a new file called "main.yml" under the "tasks" directory:
+    
      - name: Create superusers group
   group:
     name: superusers
@@ -29,3 +30,6 @@
     validate: "groupadd -r superusers && grep -q '^superusers:' /etc/group"
   vars:
     superusers_gid: "{{ 2000 | random }}"
+
+# Apply the superusers role to a host or group of hosts by creating a playbook:
+     #nano playbook/superusers.yml
