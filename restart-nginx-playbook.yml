@@ -9,3 +9,7 @@
       systemd:
         name: nginx
         state: restarted
+        
+        
+# Now test it using the nginx-php.yml playbook. Run the following command to execute the playbook:        
+# ansible-playbook playbooks/nginx-php.yml
