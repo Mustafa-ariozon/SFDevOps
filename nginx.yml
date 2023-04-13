@@ -1,0 +1,13 @@
+# file located at roles/nginx-php/tasks/nginx.yml to copy the modified template to the appropriate location on the server. 
+# Open the nginx.yml file and modify it as follows:
+
+
+- name: Copy nginx config file
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/default
+  notify: Restart nginx
+
+
+# Here, we use the template module to copy the nginx.conf.j2 template to /etc/nginx/sites-available/default, which is the default configuration file for nginx. 
+# We also include a notify directive to trigger the Restart nginx handler when the task is complete.
