@@ -1,3 +1,7 @@
+# create the restart-nginx.yml handler file located at roles/nginx-php/handlers/restart-nginx.yml to restart nginx when necessary. 
+# Open the restart-nginx.yml file and modify it as follows:
+
+
 - name: Example playbook to restart nginx
   hosts: all
   tasks:
