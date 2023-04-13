@@ -9,3 +9,4 @@
  
  # This playbook will run the tasks defined in tasks/main.yml under the superusers role, which creates a new sudoers file at /etc/sudoers.d/superusers with the configuration for the superusers group.
 
+# ssh user2@<your-server-ip>
