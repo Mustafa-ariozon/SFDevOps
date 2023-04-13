@@ -1,0 +1,138 @@
+Configure the dnsmasq role:
+
+Step 1: Create a new directory called "dnsmasq" under the "roles" directory:
+  mkdir -p ansible-project/roles/dnsmasq
+  
+Step 2: Create a new file called "main.yml" under the "tasks" directory:
+  nano ansible-project/roles/dnsmasq/tasks/main.yml
+  
+Step 3: Add the following tasks to the "main.yml" file:
+  - name: Install dnsmasq package
+    apt:
+      name: dnsmasq
+      state: present
+  - name: Configure dnsmasq
+    template:
+      src: dnsmasq.conf.j2
+      dest: /etc/dnsmasq.conf
+    notify: restart dnsmasq
+  - name: Start dnsmasq service
+    service:
+      name: dnsmasq
+      state: started
+      enabled: true
+      
+Step 4: Create a new file called "dnsmasq.conf.j2" under the "templates" directory:
+  nano ansible-project/roles/dnsmasq/templates/dnsmasq.conf.j2
+  
+Step 5: Add the following content to the "dnsmasq.conf.j2" file:
+    # DNS Server
+    listen-address=127.0.0.1
+    # DNS Caching
+    cache-size=1000
+    # DNS Forwarding
+    server=8.8.8.8
+    server=8.8.4.4
+
+Step 6: Apply the dnsmasq role to a host or group of hosts by creating a playbook:
+  nano ansible-project/playbooks/dnsmasq.yml
+  
+Step 7: Add the following content to the "dnsmasq.yml" file:
+  - name: Configure dnsmasq
+    hosts: all
+    roles:
+      - dnsmasq
+      
+Step 8: Run the playbook to apply the dnsmasq role:
+  ansible-playbook ansible-project/playbooks/dnsmasq.yml
+  
+Create a superusers group:
+
+Step 1: Create a new directory called "superusers" under the "roles" directory:
+  mkdir -p ansible-project/roles/superusers
+  
+Step 2: Create a new file called "main.yml" under the "tasks" directory:
+  nano ansible-project/roles/superusers/tasks/main.yml
+
+Step 3: Add the following tasks to the "main.yml" file:
+    - name: Create superusers group
+      group:
+        name: superusers
+        state: present
+    - name: Add user2 and user3 to the superusers group
+      lineinfile:
+        path: /etc/group
+        regexp: "^superusers:"
+        line: "superusers:x:{{ superusers_gid }}:user2,user3"
+        validate: "groupadd -r superusers && grep -q '^superusers:' /etc/group"
+      vars:
+        superusers_gid: "{{ 2000 | random }}"
+    
+Step 4: Apply the superusers role to a host or group of hosts by creating a playbook:
+  nano ansible-project/playbooks/superusers.yml
+  
+Step 5: Add the following content to the "superusers.yml" file:
+    - name: Create superusers group and add users
+      hosts: all
+      roles:
+        - superusers
+Step 6: Run the superusers.yml playbook to create the superusers group.
+  ansible-playbook playbooks/superusers.yml -i inventory/production
+  This playbook will run the tasks defined in tasks/main.yml under the superusers role, 
+  which creates a new sudoers file at /etc/sudoers.d/superusers with the configuration for the superusers group.
+Verify that the superusers group was created successfully by logging in as user2 or user3 and running the sudo -i command. 
+This should allow them to become the root user with elevated privileges.
+  ssh user2@<your-server-ip>
+  sudo -i
+  If successful, the prompt should change to indicate that you are logged in as the root user.
+
+To complete the role for step 3, we need to modify the nginx.conf.j2 template to set the root directive to /opt/nginx/ansible, 
+which is where we want the index.php file to be served from. Open the nginx.conf.j2 template file located at 
+roles/nginx-php/templates/nginx.conf.j2 and modify the root directive as follows:
+
+    server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /opt/nginx/ansible;
+
+        index index.php index.html index.htm;
+
+        location / {
+            try_files $uri $uri/ =404;
+        }
+
+        location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+        }
+    }
+Now that the nginx.conf.j2 template has been updated, we need to modify the nginx.yml task file located at roles/nginx-php/tasks/nginx.yml 
+to copy the modified template to the appropriate location on the server. Open the nginx.yml file and modify it as follows:
+
+    - name: Copy nginx config file
+      template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/sites-available/default
+      notify: Restart nginx
+Here, we use the template module to copy the nginx.conf.j2 template to /etc/nginx/sites-available/default, which is the default configuration file for nginx. We also include a notify directive to trigger the Restart nginx handler when the task is complete.
+
+Finally, we need to create the restart-nginx.yml handler file located at roles/nginx-php/handlers/restart-nginx.yml to restart nginx when necessary. Open the restart-nginx.yml file and modify it as follows:
+
+- name: Restart nginx
+  systemd:
+    name: nginx
+    state: restarted
+Here, we use the systemd module to restart the nginx service.
+
+Save all the changes made to the role and test it using the nginx-php.yml playbook. Run the following command to execute the playbook:
+
+ansible-playbook playbooks/nginx-php.yml -i inventory/production/hosts -u username --ask-become-pass
+Here, replace username with the name of the user on the remote server who has sudo privileges, and enter the password when prompted.
+
+Once the playbook has run successfully, you should be able to access the web server's main page by navigating to the server's IP address in a web browser. The page should display information about the PHP installation on the server.
+
+Step 9: Verify Nginx and PHP-FPM configuration
+
+Open a web browser and go to the IP address or domain name of the web server where you have installed Nginx and PHP-FPM.
+You should see the default Nginx welcome page.
