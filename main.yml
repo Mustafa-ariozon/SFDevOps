@@ -1,0 +1,22 @@
+# Configure the dnsmasq role:
+  # Create a new directory called "dnsmasq" under the "roles" directory: 
+    # mkdir -p ansible-project/roles/dnsmasq
+      #  Create a new file called "main.yml" under the "tasks" directory:
+        # nano ansible-project/roles/dnsmasq/tasks/main.yml
+
+- name: Install dnsmasq package
+  apt:
+    name: dnsmasq
+    state: present
+
+- name: Configure dnsmasq
+  template:
+    src: dnsmasq.conf.j2
+    dest: /etc/dnsmasq.conf
+  notify: restart dnsmasq
+
+- name: Start dnsmasq service
+  service:
+    name: dnsmasq
+    state: started
+    enabled: true
