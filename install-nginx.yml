@@ -1,0 +1,12 @@
+Create a new playbook file named install-nginx.yml:
+
+---
+- name: Install Nginx
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
