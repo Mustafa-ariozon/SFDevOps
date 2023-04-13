@@ -1,0 +1,19 @@
+# we need to modify the nginx.conf.j2 template to set the root directive to /opt/nginx/ansible, which is where we want the index.php file to be served from. Open the nginx.conf.j2 template file located at roles/nginx-php/templates/nginx.conf.j2 and modify the root directive as follows:
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /opt/nginx/ansible;
+
+    index index.php index.html index.htm;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+    }
+}
