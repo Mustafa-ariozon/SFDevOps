@@ -1,0 +1,16 @@
+#Create a directory named "roles" under the "ansible" directory.
+#Create a directory named "users" under the "roles" directory.
+#Create a directory named "tasks" under the "users" directory.
+#Create a file named "main.yml" under the "tasks" directory.
+#In the "main.yml" file, add the following tasks:
+
+- name: Add a new user
+  remote_user: myuser
+  become: yes
+  become_method: sudo
+  authorized_key:
+    user: myuser
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    
+    
+# Note: this gives error to me, any how alternative methods are here add_user.yml 
