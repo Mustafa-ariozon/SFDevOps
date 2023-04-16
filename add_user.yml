@@ -1,0 +1,17 @@
+- name: Add a new user with authorization by key
+  hosts: all
+  become: yes
+  become_method: sudo
+  roles:
+    - users
+
+# run this: 
+ansible-playbook -i hosts add_user.yml
+# This should execute the users role and add a new user with SSH key authorization.
+## if you get error
+#run the following commands to make sure that the user exist user/s on remote server 
+getent passwd myuser
+# if not then run this:
+sudo adduser my_user_name_here
+
+
