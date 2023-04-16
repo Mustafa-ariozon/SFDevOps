@@ -1,0 +1,8 @@
+Create a directory named "vars" under the "http" directory.
+
+Create a file named "main.yml" under the "vars" directory.
+
+In the "main.yml" file, add the following variables:
+
+php_listen_ip: 127.0.0.1
+php_listen_port: yourporthere
