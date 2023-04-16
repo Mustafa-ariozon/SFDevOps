@@ -1,0 +1,20 @@
+Create a directory named "php" under the "roles" directory.
+
+Create a directory named "tasks" under the "php" directory.
+
+Create a file named "main.yml" under the "tasks" directory.
+
+In the "main.yml" file, add the following tasks:
+
+- name: Install PHP
+  become: true
+  apt:
+    name: php-fpm php-mysql
+    state: present
+
+- name: Copy www.conf file
+  template:
+    src: www.conf.j2
+    dest: /etc/php/7.4/fpm/pool.d/www.conf
+  notify: restart php7.4-fpm
+
