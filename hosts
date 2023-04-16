@@ -1,4 +1,7 @@
 # Create a file named "hosts" under the "ansible" directory and add the IP address and hostname of the machine to it as follows:
+Command:
 
-[name]
-xxx.xx.xx.x.x ansible_ssh_user=<username> ansible_ssh_private_key_file=<path_to_private_key>
+echo "[my_hosts]" > hosts
+echo "xxx.xx.x.xx ansible_user=<your_username> ansible_ssh_private_key_file=/path/to/your/ssh_key" >> hosts
+
+Replace <your_username> with your username on the host machine and /path/to/your/ssh_key with the path to your SSH private key.
