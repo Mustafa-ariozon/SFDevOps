@@ -1,0 +1,25 @@
+Create a directory named "templates" under the "http" directory.
+
+Create a file named "nginx.conf.j2" under the "templates" directory.
+
+In the "nginx.conf.j2" file, add the following configuration:
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+
+    index index.php index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass 127.0.0.1:9000;
+    }
+}

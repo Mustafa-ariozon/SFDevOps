@@ -1,0 +1,61 @@
+we can create directories and files under each direcoties by using commnad
+# mkdir -p roles/{users/{tasks,vars},http/{tasks,templates,vars,files},php/{tasks,templates,vars}}
+touch roles/{users/{tasks/main.yml,vars/main.yml},http/{tasks/main.yml,templates/nginx.conf.j2,vars/main.yml},http/files/index.php,php/{tasks/main.yml,templates/www.conf.j2,vars/main.yml}}
+
+----------------------------------------------
+ansible/
+├── hosts
+		hosts.yml
+└── roles/cd 
+    ├── users/
+    │   ├── tasks/
+    │   │   └── main.yml
+    │   └── vars/
+    │       └── main.yml
+    ├── http/
+    │   ├── tasks/
+    │   │   └── main.yml
+    │   ├── templates/
+    │   │   └── nginx.conf.j2
+    │   ├── vars/
+    │   │   └── main.yml
+    │   └── files/
+    │       └── index.php
+    └── php/
+        ├── tasks/
+        │   └── main.yml
+        ├── templates/
+        │   └── www.conf.j2
+        └── vars/
+            └── main.yml
+
+------------------------------------PHP------------------------------
+<?php
+echo "<h1>Dir-Structure</h1>";
+echo "<pre>";
+echo "/ansible\n";
+echo "├── hosts\n";
+echo "└── roles/\n";
+echo "    ├── users/\n";
+echo "    │   ├── tasks/\n";
+echo "    │   │   └── main.yml\n";
+echo "    │   └── vars/\n";
+echo "    │       └── main.yml\n";
+echo "    ├── http/\n";
+echo "    │   ├── tasks/\n";
+echo "    │   │   └── main.yml\n";
+echo "    │   ├── templates/\n";
+echo "    │   │   └── nginx.conf.j2\n";
+echo "    │   ├── vars/\n";
+echo "    │   │   └── main.yml\n";
+echo "    │   └── files/\n";
+echo "    │       └── index.php\n";
+echo "    └── php/\n";
+echo "        ├── tasks/\n";
+echo "        │   └── main.yml\n";
+echo "        ├── templates/\n";
+echo "        │   └── www.conf.j2\n";
+echo "        └── vars/\n";
+echo "            └── main.yml\n";
+echo "</pre>";
+?>

@@ -1,0 +1,12 @@
+# Create a file named "hosts" under the "ansible" directory and add the IP address and hostname of the machine to it as follows:
+This inventory file has two groups: "webserver" and "database", and lists the IP addresses of the hosts in each group.
+
+To use this inventory file with Ansible, save it to a file (e.g., "hosts") in your Ansible project directory (e.g., "~/ansible"), like this:
+hoop@user:~/ansible# nano hosts
+
+Command:
+
+echo "[my_hosts]" > hosts
+echo "xxx.xx.x.xx ansible_user=<your_username> ansible_ssh_private_key_file=/path/to/your/ssh_key" >> hosts
+
+Replace <your_username> with your username on the host machine and /path/to/your/ssh_key with the path to your SSH private key.
